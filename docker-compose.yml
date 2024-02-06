@@ -1,0 +1,45 @@
+version: '3.7'
+
+services:
+  mysql:
+    image: mysql:8.3.0
+    container_name: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    volumes:
+      - ./mysql:/var/lib/mysql
+    ports:
+      - 3306:3306
+
+  phpmyadmin:
+    depends_on:
+      - mysql
+    image: phpmyadmin
+    container_name: phpmyadmin
+    restart: always
+    environment:
+      PMA_HOST: ${MYSQL_SERVICE}
+    ports:
+      - 8080:80
+
+  backend:
+    build:
+      context: .
+      target: ${STAGE}
+      dockerfile: ./Dockerfile
+    container_name: backend
+    ports:
+      - 3000:3000
+    depends_on:
+      - mysql
+      - phpmyadmin
+    volumes:
+      - ./.env:/app/.env
+
+volumes:
+  mysql:
+    external: false
