@@ -29,5 +29,5 @@ services:
       - ./.env:/app/.env
 
 volumes:
-  postgres:
+  mysql:
     external: false

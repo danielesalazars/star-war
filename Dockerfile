@@ -19,7 +19,7 @@ RUN npm run build
 FROM node:20.10.0-alpine3.19 as prod-deps
 WORKDIR /app
 COPY package.json package.json
-RUN npm install --frozen-lockfile
+RUN npm install --prod --frozen-lockfile
 
 FROM node:20.10.0-alpine3.19 as prod
 EXPOSE 3000
