@@ -7,7 +7,7 @@ provider:
 
 functions:
   main:
-    handler: dist/main.bootstrap
+    handler: dist/serverless.handler
     events:
       - http:
           method: ANY
@@ -26,11 +26,3 @@ functions:
       MYSQL_DATABASE: starwar
       BACKEND_PORT: 3000
       SWAPI_URL: https://swapi.py4e.com/api
-
-custom:
-  webpack:
-    webpackConfig: './webpack.config.js'
-
-package:
-  exclude:
-    - node_modules/**
